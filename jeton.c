@@ -9,6 +9,7 @@ int main()
     int a[LIMIT],b[LIMIT];
     fscanf(input,"%d",&n);
     fscanf(input,"%d",&m);
+    for(i=1;i<LIMIT;i++) a[i]=b[i]=0;
     for(i=1; i<=n; i++)
     {
         fscanf(input,"%d",&temp);
