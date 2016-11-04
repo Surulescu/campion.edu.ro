@@ -1,58 +1,46 @@
 #include<stdio.h>
-#define LIMIT 50001
+
 int main()
 {
     FILE *input,*output;
     input=fopen("jeton.in","r");
     output=fopen("jeton.out","w");
-    int n,m,i,j,min=LIMIT,max=0,temp,k=0,l=0,c,stop;
-    int a[LIMIT],b[LIMIT];
+    int n,m,i,j,min=50000,max=0,k=0,q,l=0,h,c;
+    int a[28000],b[28000];
     fscanf(input,"%d",&n);
     fscanf(input,"%d",&m);
     for(i=1; i<=n; i++)
     {
-        fscanf(input,"%d",&temp);
-        a[temp]=a[temp]+1;
+        fscanf(input,"%d",&a[i]);
     }
     for(i=1; i<=m; i++)
     {
-        fscanf(input,"%d",&temp);
-        b[temp]=b[temp]+1;
+        fscanf(input,"%d",&b[i]);
     }
-    i=1;
-    stop=0;
-    while((i<LIMIT)&&(stop==0))
+    for(i=1; i<=n; i++)
     {
-        if((a[i]>=1)&&(b[i]>=1)) stop=1;
-        i=i+1;
+        for(j=1; j<=m; j++)
+        {
+            if(a[i]==b[j])
+            {
+                if(a[i]>max) max=a[i];
+                if(a[i]<min) min=a[i];
+            }
+        }
     }
-    i=i-1;
-    min=i;
-    i=LIMIT-1;
-    stop=0;
-    while((i>=1)&&(stop==0))
+    for(i=1; i<=n; i++)
     {
-        if((a[i]>=1)&&(b[i]>=1)) stop=1;
-        i=i-1;
+        if((a[i]>=min)&&(a[i]<=max)) k=k+1;
     }
-    i=i+1;
-    max=i;
-
-    for(i=1;i<min;i++)
+    q=n-k;
+    for(i=1; i<=m; i++)
     {
-        if(a[i]>=1) k=k+a[i];
-        if(b[i]>=1) l=l+b[i];
+        if((b[i]>=min)&&(b[i]<=max)) l=l+1;
     }
-
-    for(i=max+1;i<LIMIT;i++)
-    {
-        if(a[i]>=1) k=k+a[i];
-        if(b[i]>=1) l=l+b[i];
-    }
-
-    if(k==l) c=0;
-    if(k>l) c=1;
-    if(k<l) c=2;
+    h=m-l;
+    if(q==h) c=0;
+    else if(q>h) c=1;
+    else if(q<h) c=2;
     fprintf(output,"%d ",min);
     fprintf(output,"%d ",max);
     fprintf(output,"%d",c);
