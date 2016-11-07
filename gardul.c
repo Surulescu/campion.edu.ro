@@ -13,27 +13,11 @@ int main()
     w=q;
     for(i=1;i<=n;i++)
     {
-        if(p==q)
-        {
-            pr=pr+1;
-            rd=rd+1;
-            bl=bl+1;
-            p=(rd+1)*k;
-            q=q+w;
-        }else if(i==p)
-        {
-            rd=rd+1;
-            p=(rd+1)*k;
-        }else if(i==q)
-        {
-            bl=bl+1;
-            q=q+w;
-        }
+        if((i%p==0)&&(i%q!=0)) rd++;
+        if((i%q==0)&&(i%p!=0)) bl++;
+        if((i%p==0)&&(i%q==0)) pr++;
     }
-    rd=rd-pr;
-    bl=bl-pr;
-    total=n-rd-bl-pr;
-    fprintf(output,"%d\n",total);
+    fprintf(output,"%d\n",n-rd-bl-pr);
     fprintf(output,"%d\n",rd);
     fprintf(output,"%d\n",bl);
     fprintf(output,"%d",pr);
