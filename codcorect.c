@@ -16,7 +16,7 @@ int main()
             {
                 temp=val;
                 ultima=val%10;
-                while(val>10)
+                while(val>=10)
                 {
                     k=k+1;
                     val=val/10;
