@@ -1,7 +1,8 @@
 #include<stdio.h>
 int a[190001];
-int c[1000000];
 int b[1000000];
+int c[1000000];
+int d[1000000];
 
 void ordonare(int numar)
 {
@@ -11,20 +12,19 @@ void ordonare(int numar)
         if(a[i]<min) min=a[i];
         if(a[i]>max) max=a[i];
     }
-    for(j=min; j<=max; j++) c[j]=0;
     for(i=numar; i>=1; i--)
     {
         for(j=min; j<=max; j++)
         {
-            if(a[i]==j) c[j]=1;
+            if(a[i]==j) b[j]=1;
         }
     }
-    for(j=min; j<=max; j++)
+    for(j=min; j<=max; j++)   c[j]=c[j-1]+b[j];
+    for(i=1;i<=numar;i++)
     {
-        if(c[j]==1)  b[j]=j;
+        d[c[a[i]]]=a[i];
+        c[a[i]]=c[a[i]]-1;
     }
-    for(j=min; j<=max; j++) printf("%d ",b[j]);
-    printf("\n");
 }
 
 int numarare(int valoare)
@@ -32,9 +32,7 @@ int numarare(int valoare)
     int i,temp=1,m1=1;
     for(i=valoare; i>=2; i--)
     {
-        //printf("%d ",a[i]);
-        //printf("%d\n",a[i-1]);
-        if(a[i]-a[i-1]==1)
+        if(d[i]-d[i-1]==1)
         {
             m1=m1+1;
             if(m1>temp) temp=m1;
