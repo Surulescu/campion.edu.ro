@@ -2,7 +2,6 @@
 int a[190001];
 int b[1000000];
 int c[1000000];
-int d[1000000];
 
 void ordonare(int numar)
 {
@@ -12,19 +11,25 @@ void ordonare(int numar)
         if(a[i]<min) min=a[i];
         if(a[i]>max) max=a[i];
     }
+    for(i=min;i<=max;i++) c[i]=0;
     for(i=numar; i>=1; i--)
     {
-        for(j=min; j<=max; j++)
+        /*for(j=min; j<=max; j++)
         {
-            if(a[i]==j) b[j]=1;
-        }
+            //if(a[i]==j) b[j]=1;
+            c[a[i]]=c[a[i]]+1;
+        }*/
+        c[a[i]]=c[a[i]]+1;
     }
-    for(j=min; j<=max; j++)   c[j]=c[j-1]+b[j];
+    //for(i=min;i<=max;i++) printf("%d ",c[i]);
+    for(j=min+1; j<=max; j++)   c[j]=c[j-1]+c[j];
+    //for(i=min;i<=max;i++) printf("%d ",c[i]);
     for(i=1;i<=numar;i++)
     {
-        d[c[a[i]]]=a[i];
+        b[c[a[i]]]=a[i];
         c[a[i]]=c[a[i]]-1;
     }
+    //printf("%\n");
 }
 
 int numarare(int valoare)
@@ -32,7 +37,7 @@ int numarare(int valoare)
     int i,temp=1,m1=1;
     for(i=valoare; i>=2; i--)
     {
-        if(d[i]-d[i-1]==1)
+        if(b[i]-b[i-1]==1)
         {
             m1=m1+1;
             if(m1>temp) temp=m1;
