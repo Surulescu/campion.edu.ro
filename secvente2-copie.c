@@ -1,6 +1,6 @@
 #include<stdio.h>
 int a[190001];
-int b[1000000];
+int b[190001];
 int c[1000000];
 
 void ordonare(int numar)
@@ -12,24 +12,13 @@ void ordonare(int numar)
         if(a[i]>max) max=a[i];
     }
     for(i=min;i<=max;i++) c[i]=0;
-    for(i=numar; i>=1; i--)
-    {
-        /*for(j=min; j<=max; j++)
-        {
-            //if(a[i]==j) b[j]=1;
-            c[a[i]]=c[a[i]]+1;
-        }*/
-        c[a[i]]=c[a[i]]+1;
-    }
-    //for(i=min;i<=max;i++) printf("%d ",c[i]);
+    for(i=numar; i>=1; i--)     c[a[i]]=c[a[i]]+1;
     for(j=min+1; j<=max; j++)   c[j]=c[j-1]+c[j];
-    //for(i=min;i<=max;i++) printf("%d ",c[i]);
     for(i=1;i<=numar;i++)
     {
         b[c[a[i]]]=a[i];
         c[a[i]]=c[a[i]]-1;
     }
-    //printf("%\n");
 }
 
 int numarare(int valoare)
