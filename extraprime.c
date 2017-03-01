@@ -3,56 +3,31 @@
 
 int prim(int numar)
 {
-    int divizor=2,stop=1;
+    int divizor=3,stop=1;
+    if((numar==1)||(numar==0)) return 0;
     while(divizor<=sqrt(numar)&&(stop==1))
     {
         if(numar%divizor==0) stop=0;
-        divizor++;
+        divizor=divizor+2;
     }
     return stop;
 }
 
-int extraprime(int numar,int nr_cifre,int intrari)
+int extraprime(int numar,int nr_cifre)
 {
-    int divizor,stop,prim,secund,init,k,l,val;
-    init=numar;
-    k=0;
-    l=1;
-    val=0;
-    //printf("%d\n",numar);
-    prim=(int)(pow(10,nr_cifre-k)+0.5);
-    secund=(int)(pow(10,nr_cifre-l)+0.5);
-    init=((numar/prim)*secund)+(numar%secund);
-    printf("%d ",init);
-    if(init!=1)
+    int aux,k=1,p=10,stop,prim_1,secund;
+    stop=0;
+    while((nr_cifre>0)&&(stop==0))
     {
-        while(intrari-1>0)
-        {
-            if(init!=1)
-            {
-                divizor=2;
-                stop=1;
-                while((divizor<sqrt(init))&&(stop==1))
-                {
-                    if(init%divizor==0) stop=0;
-                    divizor++;
-                }
-                if(stop==1)
-                {
-                    val++;
-                    k++;
-                    l++;
-                    prim=(int)(pow(10,nr_cifre-k)+0.5);
-                    secund=(int)(pow(10,nr_cifre-l)+0.5);
-                    init=((numar/prim)*secund)+(numar%secund);
-                    printf("%d\n",init);
-                }
-            }
-            intrari=intrari-1;
-        }
+        aux=numar;
+        prim_1=(int)(pow(10,k)+0.5);
+        secund=(int)(pow(10,k-1)+0.5);
+        aux=((numar/prim_1)*secund)+(numar%secund);
+        k++;
+        nr_cifre--;
+        if(prim(aux)==0) stop=1;
     }
-    else stop=0;
-    return val;
+    if(stop==0)  return numar;
 }
 
 
@@ -61,25 +36,33 @@ int main()
     FILE *input,*output;
     input=fopen("extraprime.in","r");
     output=fopen("extraprime.out","w");
-    int a,b,intrari,nr_cifre=0,nr_prim,aux,i,sol;
+    int a,b,intrari,nr_cifre=0,nr_prim,aux,i,min=10000000,max=0,sol=0;
     fscanf(input,"%d",&a);
     fscanf(input,"%d",&b);
-    for(i=a; i<=b; i++)
+    if(a%2==0) a++;
+    for(i=a; i<=b; i=i+2)
     {
         if(prim(i)==1)
         {
-            //printf("%d\n",i);
             aux=i;
             while(aux>0)
             {
                 nr_cifre++;
                 aux=aux/10;
             }
-            intrari=nr_cifre;
-            sol=extraprime(i,nr_cifre,intrari);
+            if(extraprime(i,nr_cifre)==i)
+            {
+                sol++;
+                if(i>max) max=i;
+                if(i<min) min=i;
+            }
+
         }
         nr_cifre=0;
     }
+    fprintf(output,"%d\n",sol);
+    fprintf(output,"%d\n",min);
+    fprintf(output,"%d",max);
     fclose(input);
     fclose(output);
     return 0;
