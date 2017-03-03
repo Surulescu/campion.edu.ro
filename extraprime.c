@@ -42,6 +42,7 @@ int main()
     if(a%2==0) a++;
     for(i=a; i<=b; i=i+2)
     {
+        printf("%d\n",i);
         if(prim(i)==1)
         {
             aux=i;
